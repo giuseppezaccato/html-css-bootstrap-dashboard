@@ -48,16 +48,19 @@
     </header>
 
     <main>
-        <div class="container my-4">
+        <div class="container my-3">
             <h1>Nuovo Libro</h1>
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" id="pippo" novalidate>
                 <div class="row">
                     <div class="mb-3 col-6">
                         <label for="AuthorName" class="form-label">Nome Autore</label>
                         <input type="text" class="form-control" id="AuthorName"
                             placeholder="Inserisci il nome dell'Autore" required>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Aggiungi Un Nome Valido
                         </div>
                     </div>
 
@@ -66,7 +69,10 @@
                         <input type="text" class="form-control" id="AuthorsurName"
                             placeholder="Inserisci il Cognome dell'Autore" required>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Aggiungi Un Cognome Valido
                         </div>
                     </div>
 
@@ -76,7 +82,10 @@
                             placeholder="Inserisci il Titolo del libro" required>
                         <div id="booktitle" class="form-text">Titolo versione italiana</div>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Specifica meglio il titolo del libro
                         </div>
                     </div>
                 </div>
@@ -92,10 +101,13 @@
                             <option value="Horror">Horror</option>
                             <option value="Fantasy">Fantasy</option>
                             <option value="3">Three</option>
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
                         </select>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
                         </div>
+
                     </div>
 
                     <div class="mb-3 col-sm-12 col-md-4">
@@ -103,18 +115,22 @@
                         <input type="number" class="form-control" id="year" placeholder="Inserisci l'anno" min="1800"
                             max="2024" required>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
                         </div>
                     </div>
 
                     <div class="mb-3 col-sm-12 col-md-4">
                         <label for="isbn" class="form-label">ISBN#</label>
-                        <input type="text" class="form-control" id="isbn" placeholder="Inserisci il codice ISBN#"
-                            required>
+                        <input type="number" class="form-control" id="isbn" placeholder="Inserisci il codice ISBN#"
+                            min="1111111111111" max="9999999999999" required>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Specifica i caratteri (ESEMPIO: 978–88–8080–123-4)
                         </div>
                     </div>
+
                     <hr class="my-4">
 
                     <div class="mb-3 col-12">
@@ -122,7 +138,7 @@
                         <textarea class="form-control" placeholder="Inserisci eventuali note sul libro" id="note"
                             style="height: 100px" required></textarea>
                         <div class="valid-feedback">
-                            Looks good!
+                            looks good!
                         </div>
                     </div>
                 </div>
@@ -131,24 +147,37 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                     <label class="form-check-label" for="exampleCheck1">Disponibile anche in digitale</label>
                 </div>
-                <button type="submit" class="btn btn-primary">Aggiungi Libro</button>
+                <button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="exampleModal">Aggiungi Libro</button>
             </form>
 
+            <!-- ------BONUS MODAL------- -->
+            <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body text-success">
+                            <h5>Il form è stato inviato correttamente!</h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary close"
+                                data-bs-dismiss="modal">Chiudi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <!-- link bs.js 5.3.3 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- control form validation da aggiungere NOVALIDATE spiegato meglio:
-    For custom Bootstrap form validation messages,
+    <!--For custom Bootstrap form validation messages,
     you’ll need to add the novalidate boolean attribute to your <form>.
     This disables the browser default feedback tooltips, 
     but still provides access to the form validation APIs in JavaScript. -->
 
-
+    <!-- // Example starter JavaScript for disabling form submissions if there are invalid fields -->
     <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
         (() => {
             'use strict'
 
@@ -167,6 +196,34 @@
                 }, false)
             })
         })()
+    </script>
+
+    <!-- prova rudimentale dello show di un modal
+    if "/* tutti i campi sono stati validati */" -->
+
+    <!-- ------BONUS MODAL------- -->
+    <script>
+        const form = document.getElementById('pippo');
+        const modal = document.getElementById('exampleModal');
+        const span = document.getElementsByClassName("close")[0];
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Impedisci l'invio del form in modo tradizionale
+
+            if (form.checkValidity()) {
+                // Tutti i campi sono validi
+                modal.style.display = 'block';
+            } else {
+                // Almeno un campo non è valido
+                // Mostra un messaggio di errore generico o più specifici
+                alert('Si prega di correggere gli errori nel form.');
+            }
+        });
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
     </script>
 
 
